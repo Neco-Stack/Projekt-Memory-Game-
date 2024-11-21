@@ -39,7 +39,8 @@ body {
   display: flex;
   flex-wrap: wrap;
   padding: 20px;
-  perspective: 1000px;
+
+  perspective: 940px;
 }
 
 .gameCard {
