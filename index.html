@@ -4,9 +4,45 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/style.css">
     <title>Projekt Memory Game</title>
   </head>
   <body>
+    <header class="header wrapper">
+      <h1>Superhero</h1>
+      <div class="gameResult">
+        <div class="pairsClicked">
+          <p>Pairs clicked: <span id="clickedResult">0</span>
+          </p>
+        </div>
+        <div class="pairsGuessed">
+          <p>Pairs guessed: <span class="guessedResult">0</span>
+          </p>
+        </div>
+      </div>
+    </header>
+    <main class="main wrapper">
+      <div class="gameBoard">
+        <div class="gameCard flipped">
+          <div class="gameCard-inner">
+            <div class="gameCard-front">
+              <div class="gameEmoji">
+                🦁
+              </div>
+            </div>
+            <div class="gameCard-back"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+
+
+
+
+
+
+
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
