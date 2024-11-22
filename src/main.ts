@@ -3,7 +3,7 @@ const gameBoardOutput = document.querySelector(".gameBoard") as HTMLElement;
 const clickedResultElement = document.querySelector(".clickedResult") as HTMLElement;
 const guessedResultElement = document.querySelector(".guessedResult") as HTMLElement;
 const gameOverMessageElement = document.querySelector(".gameOverMessage") as HTMLElement;
-
+const main = document.querySelector(".main") as HTMLElement;
 const emoji:string[] = ["🐘", "🐘", "🐼", "🐼", "🦁", "🦁", "🐰", "🐰", "🐱","🐱", "🐵","🐵", "🐑","🐑", "🐝", "🐝", "🐶", "🐶", "🐙", "🐙", "🦍", "🦍", "🐁", "🐁"]
 let firstCard:HTMLElement | null
 let secondCard:HTMLElement | null;
@@ -33,10 +33,13 @@ const renderCards = (arr: string[]) => {
         gameCardDiv.className = "gameCard";
         gameCardDiv.innerHTML = `
         <div class="gameCard-inner">
+        
             <div class="gameCard-front">
-            ${index}
+
             </div>
+            
             <div class="gameCard-back">
+            
               <div class="gameEmoji">
                 ${emoji}
               </div>
@@ -44,16 +47,18 @@ const renderCards = (arr: string[]) => {
           </div>
         `
         gameBoardOutput.append(gameCardDiv);
-        gameCardDiv.addEventListener("click", (e) => {
-            const currentTarget = e.currentTarget as HTMLElement;
-            flippedCard(currentTarget)
-        })
+        gameCardDiv.addEventListener("click", handleCardClick)
     })
+}
+
+const handleCardClick = (e) => {
+  if(e.currentTarget.classList.contains("flipped")) return
+  const currentTarget = e.currentTarget as HTMLElement;
+  flippedCard(currentTarget)
 }
 
 const flippedCard = (target:HTMLElement) => {
     console.log(target);
-    
     if(gameBoardBlock) return
     if(target === firstCard) return
 
@@ -73,8 +78,7 @@ const flippedCard = (target:HTMLElement) => {
 
 const checkToWin = () => {
     if(firstCard?.textContent === secondCard?.textContent) {
-      firstCard?.removeEventListener("click",() => flippedCard)
-      secondCard?.removeEventListener("click", () => flippedCard)
+
       pairsGuessed++;
       updatePairsGuessed();
       firstCard = null ;
@@ -107,10 +111,17 @@ const checkToWin = () => {
  }
 
  const showGameOverMessage = () => {
-  const message = `Gratulation! Du hast alle ${totalPairs} Paare in ${pairsClicked} Versuchen gefunden! `;
-  gameOverMessageElement.textContent = message; 
-  gameOverMessageElement.style.display = 'block'
+  const gameOverMessageDiv = document.createElement("div");
+  gameOverMessageDiv.className = "gameOverMessage";
   
- }
+  const modalDiv = document.createElement("div");
+  modalDiv.className = "modal";
+  modalDiv.innerHTML = `
+   Gratulation! Du hast alle ${totalPairs} Paare in ${pairsClicked} Versuchen gefunden!
+  `;
+  
+  gameOverMessageElement.append(modalDiv);
+  main.append(gameOverMessageElement);
+};
 renderCards(sortRandomArr)
 
