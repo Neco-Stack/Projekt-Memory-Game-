@@ -2,6 +2,7 @@ const gameBoardOutput = document.querySelector(".gameBoard") as HTMLElement;
 
 const clickedResultElement = document.querySelector(".clickedResult") as HTMLElement;
 const guessedResultElement = document.querySelector(".guessedResult") as HTMLElement;
+const gameOverMessageElement = document.querySelector(".gameOverMessage") as HTMLElement;
 
 const emoji:string[] = ["🐘", "🐘", "🐼", "🐼", "🦁", "🦁", "🐰", "🐰", "🐱","🐱", "🐵","🐵", "🐑","🐑", "🐝", "🐝", "🐶", "🐶", "🐙", "🐙", "🦍", "🦍", "🐁", "🐁"]
 let firstCard:HTMLElement | null
@@ -27,13 +28,13 @@ console.log(sortRandomArr);
 const renderCards = (arr: string[]) => {
     gameBoardOutput.innerHTML = "";
 
-    arr.forEach((emoji: string) => {
+    arr.forEach((emoji: string, index:number) => {
         const gameCardDiv = document.createElement("div");
         gameCardDiv.className = "gameCard";
         gameCardDiv.innerHTML = `
         <div class="gameCard-inner">
             <div class="gameCard-front">
-
+            ${index}
             </div>
             <div class="gameCard-back">
               <div class="gameEmoji">
@@ -51,7 +52,8 @@ const renderCards = (arr: string[]) => {
 }
 
 const flippedCard = (target:HTMLElement) => {
-  
+    console.log(target);
+    
     if(gameBoardBlock) return
     if(target === firstCard) return
 
@@ -105,8 +107,10 @@ const checkToWin = () => {
  }
 
  const showGameOverMessage = () => {
-  const message = `Gratulation! Du hast alle ${totalPairs} Paare in ${pairsClicked} Versuchen gefunden! `
+  const message = `Gratulation! Du hast alle ${totalPairs} Paare in ${pairsClicked} Versuchen gefunden! `;
+  gameOverMessageElement.textContent = message; 
+  gameOverMessageElement.style.display = 'block'
+  
  }
-
 renderCards(sortRandomArr)
 
