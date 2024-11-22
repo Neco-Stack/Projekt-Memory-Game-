@@ -1,9 +1,16 @@
 const gameBoardOutput = document.querySelector(".gameBoard") as HTMLElement;
 
+const clickedResultElement = document.querySelector(".clickedResult") as HTMLElement;
+const guessedResultElement = document.querySelector(".guessedResult") as HTMLElement;
+
 const emoji:string[] = ["🐘", "🐘", "🐼", "🐼", "🦁", "🦁", "🐰", "🐰", "🐱","🐱", "🐵","🐵", "🐑","🐑", "🐝", "🐝", "🐶", "🐶", "🐙", "🐙", "🦍", "🦍", "🐁", "🐁"]
 let firstCard:HTMLElement | null
 let secondCard:HTMLElement | null;
 let gameBoardBlock = false;
+let pairsClicked = 0; 
+let pairsGuessed= 0;
+const totalPairs = emoji.length / 2;
+
 function zufaelligSortieren(emojiArray: string[]): string[] {
     const sortiertesArray = [...emojiArray];
     for (let i = sortiertesArray.length - 1; i > 0; i--) {
@@ -15,6 +22,7 @@ function zufaelligSortieren(emojiArray: string[]): string[] {
 }
 
 const sortRandomArr = zufaelligSortieren(emoji);
+console.log(sortRandomArr);
 
 const renderCards = (arr: string[]) => {
     gameBoardOutput.innerHTML = "";
@@ -43,6 +51,7 @@ const renderCards = (arr: string[]) => {
 }
 
 const flippedCard = (target:HTMLElement) => {
+  
     if(gameBoardBlock) return
     if(target === firstCard) return
 
@@ -54,14 +63,28 @@ const flippedCard = (target:HTMLElement) => {
 
     secondCard = target;
     target.classList.add("flipped");
-    checkToWin();
     gameBoardBlock = true;
+    pairsClicked ++;
+    updatePairsClicked();
+    checkToWin();
 }
 
 const checkToWin = () => {
     if(firstCard?.textContent === secondCard?.textContent) {
       firstCard?.removeEventListener("click",() => flippedCard)
       secondCard?.removeEventListener("click", () => flippedCard)
+      pairsGuessed++;
+      updatePairsGuessed();
+      firstCard = null ;
+      secondCard = null;
+      gameBoardBlock = false;
+
+      if(pairsGuessed === totalPairs) {
+        setTimeout(() => {
+          showGameOverMessage();
+        }, 500);
+      }
+
     } else {
         setTimeout(() => {
             firstCard?.classList.remove("flipped");
@@ -69,9 +92,21 @@ const checkToWin = () => {
             firstCard = null ;
             secondCard = null;
             gameBoardBlock = false;
-        }, 2000)
-
+        }, 1000)
     }
  }
 
+ const updatePairsClicked = () => {
+  clickedResultElement.textContent = pairsClicked.toString();
+ }
+
+ const updatePairsGuessed = () => {
+  guessedResultElement.textContent = pairsGuessed.toString();
+ }
+
+ const showGameOverMessage = () => {
+  const message = `Gratulation! Du hast alle ${totalPairs} Paare in ${pairsClicked} Versuchen gefunden! `
+ }
+
 renderCards(sortRandomArr)
+
