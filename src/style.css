@@ -11,6 +11,12 @@
 }
 
 h1 {
+  color: #ffd700;
+  text-shadow: 3px 3px 6px rgba(0,0,0.7);
+  font-size: 4em;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+  animation: pulse 2s infinite;
   align-self: center;
 }
 
@@ -88,6 +94,7 @@ body {
 .gameEmoji { 
   font-size: 100px;
 }
+
 .gameOverMessage {
   position: fixed;
   top: 0;
@@ -112,4 +119,33 @@ body {
       padding: 16px;
       min-height: 120px;
       max-height: 90%;
+      font-size: 4em;
+      align-self: center;
+      color: green;
+}
+.gameResult {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.pairsClicked, .pairsGuessed {
+  background-color: #FFD700; 
+  border: 3px solid #FF4500; 
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #000000; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  transition: all 0.3s ease; 
+}
+
+.pairsClicked:hover, .pairsGuessed:hover {
+  transform: scale(1.05); /* Slight enlargement on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+.clickedResult, .guessedResult {
+  color: #FF4500; 
+  font-size: 1.2em; 
 }
